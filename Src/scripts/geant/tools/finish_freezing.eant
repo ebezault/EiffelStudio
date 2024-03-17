@@ -28,6 +28,10 @@
 		<set name="_ecf_dir" value="${EIFFEL_SRC}${path_separator}tools${path_separator}finish_freezing" />
 		<copy dir="$_ecf_dir" file="appl.ico" to_directory="$a_dir" />
 		<copy dir="$_ecf_dir" file="finish_freezing.rc" to_directory="$a_dir" />
+		<copy dir="$_ecf_dir" file="finish_freezing.exe.manifest" to_directory="$a_dir" />
+
+		<geant target="compile" file="build.eant" dir="${_ecf_dir}${path_separator}Clib"/>
+		
 		<unset name="_ecf_dir" />
 	</target>
 	

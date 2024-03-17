@@ -73,7 +73,7 @@
 		<global name="_BINARY_DIR" value="${cwd}${path_separator}BIN" unless="$_BINARY_DIR"/>
 
 		<!-- Output folder containing compiled materials -->
-		<global name="_EWEASEL_DIR" value="${cwd}${path_separator}EWEASEL" unless="$_EWEASEL_DIR"/>
+		<global name="_EWEASEL_DIR" value="${EIFFEL_SRC}${path_separator}.." unless="$_EWEASEL_DIR"/>
 		<!-- source related -->
 		<global name="_DELIVERY_DIR" value="${EIFFEL_SRC}${path_separator}Delivery" unless="${_DELIVERY_DIR}"/>
 
@@ -431,23 +431,12 @@
 
 		<!-- eweasel -->
 		<geant target="_log" arguments="Process $_EWEASEL_DIR into $a_dir ..." />
-		<available resource="$_EWEASEL_DIR" variable="eweasel_available" />
-		<group if="$eweasel_available=false" >
-			<mkdir directory="$_EWEASEL_DIR" />
-			<exec executable="svn export -N https://svn.eiffel.com/eiffelstudio/trunk/eweasel eweasel" 
-				dir="${_EWEASEL_DIR}" exit_code_variable="tmp_return_code" accept_errors="true" />
-			<exec executable="svn export https://svn.eiffel.com/eiffelstudio/trunk/eweasel/bin" 
-				dir="${_EWEASEL_DIR}/eweasel" exit_code_variable="tmp_return_code" accept_errors="true" />
-			<exec executable="svn export https://svn.eiffel.com/eiffelstudio/trunk/eweasel/control" 
-				dir="${_EWEASEL_DIR}/eweasel" exit_code_variable="tmp_return_code" accept_errors="true" />
-			<exec executable="svn export https://svn.eiffel.com/eiffelstudio/trunk/eweasel/source" 
-				dir="${_EWEASEL_DIR}/eweasel" exit_code_variable="tmp_return_code" accept_errors="true" />
-			<exec executable="svn export https://svn.eiffel.com/eiffelstudio/trunk/eweasel/compilation" 
-				dir="${_EWEASEL_DIR}/eweasel" exit_code_variable="tmp_return_code" accept_errors="true" />
-		</group>
 		<available resource="${a_dir}/eweasel" variable="eweasel_available" />
 		<mkdir directory="$a_dir/eweasel" if="$eweasel_available=false"/>
-		<geant target="copy_full_tree" arguments="${_EWEASEL_DIR}/eweasel,${a_dir}/eweasel" if="$eweasel_available=false" />
+		<geant target="copy_full_tree" arguments="${_EWEASEL_DIR}${path_separator}eweasel,${a_dir}${path_separator}eweasel" if="$eweasel_available=false" />
+		<delete directory="${a_dir}${path_separator}eweasel${path_separator}/doc"/>
+		<delete directory="${a_dir}${path_separator}eweasel${path_separator}/tests"/>
+		<delete directory="${a_dir}${path_separator}eweasel${path_separator}/results"/>
 
 	</target>
 
